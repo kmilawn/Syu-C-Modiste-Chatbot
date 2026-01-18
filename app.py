@@ -1,6 +1,5 @@
 import streamlit as st
 import os, json
-from dotenv import load_dotenv
 from google import genai
 from google.genai.errors import ClientError, ServerError
 
@@ -11,11 +10,10 @@ st.set_page_config(
     layout="centered"
 )
 
-load_dotenv()
-API_KEY = st.secrets["GEMINI_API_KEY"]
+API_KEY = st.secrets.get("GEMINI_API_KEY")
 
 if not API_KEY:
-    st.error("API Key Gemini belum diisi di .env")
+    st.error("API Key Gemini belum diset di Streamlit Secrets")
     st.stop()
 
 client = genai.Client(api_key=API_KEY)
